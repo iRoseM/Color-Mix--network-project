@@ -17,7 +17,7 @@ public class start extends javax.swing.JFrame {
     BufferedReader in;
     PrintWriter out;
     private static String playerName;
-    static String serverAddress="192.168.100.168";
+    static String serverAddress="192.168.8.108";
     static final int Server_port= 6789;
     Client clientFrame= new Client();
    

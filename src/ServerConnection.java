@@ -68,13 +68,7 @@ public class ServerConnection implements Runnable {
                 if (serverResponse.equals("ROOM_FULL")) {
                     clientFrame.displayRoomFullMessage();
                 }
-
-                // Handling disconnect request from server
-                if (serverResponse.equalsIgnoreCase("DISCONNECT")) {
-                disconnectClient();
-                break;
-
-                }
+                
                 if (serverResponse.startsWith("SCORES:")) {
                     String scores = serverResponse.substring(7);
                     clientFrame.updateScores(scores);
@@ -88,48 +82,8 @@ public class ServerConnection implements Runnable {
             System.out.println("IO exception in new client class");
             System.out.println(e.getStackTrace());
         }finally{
-            out.close();
-            System.out.println("Socket closed for client: " + clientName);
-            try{
-            client.close();
-            in.close();
-            out.close();
-            // Remove the client handler from the list of clients
-            in.close();
-            start startframe= new start();
-            startframe.setVisible(true); // Make the client frame visible
-            clientFrame.dispose();
-        }catch(IOException e){
-            e.printStackTrace();
-        }   catch (Exception ex) {
-                Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         
     }
-    }
-    private void disconnectClient() {
-    try {
-        ClientHandler ClientHandler = null;
-        mainServer.removeClient(ClientHandler);  // Notify server to remove the client
-        client.close();  // Close socket
-    } catch (IOException e) {
-        System.out.println("Error while disconnecting client: " + e.getMessage());
-    }
-    }
-
-    // Method to close resources and notify server to remove client
-//    private void cleanup() {
-//        try {
-//            
-//            server.close();
-//
-//            // Notify server to remove this client
-//            if (mainServer != null) {
-//                mainServer.removePlayer();  // Remove this clie nt from the server's list
-//                mainServer.broadcastConnectedPlayers(); // Update client list for all connected clients
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
